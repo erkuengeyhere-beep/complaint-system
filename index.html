@@ -6,292 +6,111 @@ html = r'''<!doctype html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ระบบรับเรื่องร้องทุกข์ออนไลน์</title>
-
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root {
-  --navy:#0b2d50; --blue:#155e9b; --pale-blue:#eef6fc;
-  --line:#d7e1ea; --ink:#1c2b39; --muted:#5f7180; --green:#157347;
-}
-*{box-sizing:border-box}
-html,body{width:100%;min-height:100%;margin:0;overflow-x:hidden}
+:root{--navy:#0b2d50;--blue:#155e9b;--pale-blue:#eef6fc;--line:#d7e1ea;--ink:#1c2b39;--muted:#5f7180}
+*{box-sizing:border-box}html,body{width:100%;min-height:100%;margin:0;overflow-x:hidden}
 body{font-family:"Noto Sans Thai",sans-serif;color:var(--ink)}
-.workspace{width:100%;min-height:100vh;padding:32px 20px;display:flex;justify-content:center;align-items:flex-start}
-.a4-sheet{width:794px;min-height:1123px;padding:45px 54px 34px;border:1px solid #cfd8e1;border-top:6px solid var(--navy);box-shadow:0 12px 32px rgba(23,46,68,.15);position:relative}
-.a4-sheet::before{content:"";position:absolute;top:0;right:42px;width:72px;height:5px;background:#67b6df}
+.workspace{width:100%;min-height:100vh;padding:32px 20px;display:flex;justify-content:center}
+.a4-sheet{width:794px;min-height:1123px;padding:45px 54px 34px;border:1px solid #cfd8e1;border-top:6px solid var(--navy);box-shadow:0 12px 32px rgba(23,46,68,.15);background:#fff}
 .official-mark{width:47px;height:47px;border:2px solid var(--navy);border-radius:50%;display:grid;place-items:center;color:var(--navy);flex:0 0 auto}
 .section-block{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:17px}
 .section-heading{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--pale-blue);border-bottom:1px solid var(--line)}
-.section-number{width:25px;height:25px;border-radius:50%;display:inline-grid;place-items:center;background:var(--navy);color:#fff;font-size:13px;font-weight:700;flex:0 0 auto}
-.section-content{padding:16px}
-.field-label{display:block;margin-bottom:6px;color:#273d52;font-size:15px;font-weight:600}
-.form-control{display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid #b9c7d3;border-radius:7px;background:#fff;color:var(--ink);font-family:inherit;font-size:16px;line-height:1.5;transition:border-color 160ms ease,box-shadow 160ms ease,background 160ms ease}
-textarea.form-control{min-height:88px;resize:vertical}
-.form-control:hover{border-color:#7395ae}
-.form-control:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,94,155,.18)}
-.form-control[aria-invalid="true"]{border-color:#c23934;box-shadow:0 0 0 3px rgba(194,57,52,.12)}
+.section-number{width:25px;height:25px;border-radius:50%;display:inline-grid;place-items:center;background:var(--navy);color:#fff;font-size:13px;font-weight:700}
+.section-content{padding:16px}.field-label{display:block;margin-bottom:6px;color:#273d52;font-size:15px;font-weight:600}
+.form-control{display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid #b9c7d3;border-radius:7px;background:#fff;color:var(--ink);font-family:inherit;font-size:16px;line-height:1.5}
+textarea.form-control{min-height:88px;resize:vertical}.form-control:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,94,155,.18)}
 .checkbox-control{width:20px;height:20px;accent-color:var(--navy);margin-top:2px;flex:0 0 auto}
-.submit-button,.reset-button{min-height:48px;border-radius:7px;font-family:inherit;font-size:16px;font-weight:700;transition:transform 160ms ease,box-shadow 160ms ease,filter 160ms ease}
-.submit-button:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.submit-button:disabled{opacity:.65;cursor:wait;transform:none}
-.reset-button{border:1px solid #b8c5cf;color:#365066;background:#fff}
-.reset-button:hover{background:#f4f7f9}
-.status-card{display:none;margin-top:16px;padding:14px 16px;border-radius:8px;border:1px solid #9ed5b3;background:#edf9f1;color:#145c37}
-.status-card.is-visible{display:flex}
-.error-message{display:none;margin-top:12px;padding:10px 12px;border-left:4px solid #c23934;background:#fff2f1;color:#942c28;font-size:14px}
-.error-message.is-visible{display:block}
-.stat-card{border:1px solid var(--line);border-radius:8px;padding:13px 12px;text-align:center;background:#fff}
-.stat-number{display:block;margin-top:4px;color:var(--navy);font-size:24px;font-weight:700;line-height:1.15}
-@media(max-width:840px){
-.workspace{padding:0;background:#fff!important}
-.a4-sheet{width:100%;min-height:auto;padding:28px 20px 24px;border:0;border-top:5px solid var(--navy);box-shadow:none}
-.a4-sheet::before{right:20px}
-}
-@media(max-width:520px){
-.a4-sheet{padding:23px 16px 22px}
-.section-content{padding:15px 13px}
-.form-control{min-height:54px;font-size:16px}
-textarea.form-control{min-height:118px}
-.submit-button,.reset-button{min-height:54px}
-.stat-card{padding:12px 8px}
-.stat-number{font-size:21px}
-}
+.submit-button,.reset-button{min-height:48px;border-radius:7px;font-family:inherit;font-size:16px;font-weight:700}.submit-button{background:#155e9b;color:#fff;border:0}.submit-button:disabled{opacity:.65;cursor:wait}
+.reset-button{border:1px solid #b8c5cf;color:#365066;background:#fff}.status-card{display:none;margin-top:16px;padding:14px 16px;border-radius:8px;border:1px solid #9ed5b3;background:#edf9f1;color:#145c37}.status-card.is-visible{display:flex}
+.error-message{display:none;margin-top:12px;padding:10px 12px;border-left:4px solid #c23934;background:#fff2f1;color:#942c28;font-size:14px}.error-message.is-visible{display:block}
+.stat-card{border:1px solid var(--line);border-radius:8px;padding:13px 12px;text-align:center;background:#fff}.stat-number{display:block;margin-top:4px;color:var(--navy);font-size:24px;font-weight:700}
+@media(max-width:840px){.workspace{padding:0}.a4-sheet{width:100%;min-height:auto;padding:28px 20px 24px;border:0;border-top:5px solid var(--navy);box-shadow:none}}
+@media(max-width:520px){.a4-sheet{padding:23px 16px 22px}.section-content{padding:15px 13px}.form-control{min-height:54px;font-size:16px}textarea.form-control{min-height:118px}.submit-button,.reset-button{min-height:54px}.stat-card{padding:12px 8px}.stat-number{font-size:21px}}
 </style>
 </head>
-
 <body style="background:rgb(232,237,241)">
-<main class="workspace">
-<article class="a4-sheet" style="background:#fff">
+<main class="workspace"><article class="a4-sheet">
 <header class="border-b border-slate-200 pb-5">
 <div class="flex items-start gap-3">
 <div class="official-mark" aria-hidden="true"><i data-lucide="landmark" style="width:24px;height:24px"></i></div>
 <div class="min-w-0">
-<p class="m-0 text-sm font-semibold tracking-wide" style="color:#155e9b;font-size:14px">ศูนย์บริการประชาชน</p>
+<p class="m-0 text-sm font-semibold" style="color:#155e9b;font-size:14px">ศูนย์บริการประชาชน</p>
 <h1 class="mt-1 mb-0 font-bold leading-tight" style="color:#0b2d50;font-size:32px">ระบบรับเรื่องร้องทุกข์ออนไลน์</h1>
 <p class="mt-2 mb-0 leading-relaxed" style="color:#52697b;font-size:16px">กรุณากรอกข้อมูลให้ครบถ้วนเพื่อให้เจ้าหน้าที่ตรวจสอบและดำเนินการ</p>
-</div>
-</div>
-</header>
+</div></div></header>
 
-<form id="complaint-form" novalidate class="mt-1">
-<section class="section-block">
-<div class="section-heading"><span class="section-number">1</span><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">ข้อมูลผู้แจ้ง</h2></div>
-<div class="section-content">
+<form id="complaint-form" novalidate>
+<section class="section-block"><div class="section-heading"><span class="section-number">1</span><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">ข้อมูลผู้แจ้ง</h2></div><div class="section-content">
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div><label class="field-label" for="full-name">ชื่อ–นามสกุล *</label><input id="full-name" name="full_name" class="form-control" type="text" autocomplete="name" required></div>
-<div><label class="field-label" for="phone">หมายเลขโทรศัพท์ *</label><input id="phone" name="phone" class="form-control" type="tel" autocomplete="tel" inputmode="tel" required></div>
+<div><label class="field-label">ชื่อ–นามสกุล *</label><input id="full-name" name="full_name" class="form-control" required></div>
+<div><label class="field-label">หมายเลขโทรศัพท์ *</label><input id="phone" name="phone" class="form-control" type="tel" required></div>
 </div>
 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div><label class="field-label" for="line-id">ไอดี LINE *</label><input id="line-id" name="line_id" class="form-control" type="text" required></div>
-<div><label class="field-label" for="occupation">อาชีพ</label><input id="occupation" name="occupation" class="form-control" type="text"></div>
+<div><label class="field-label">ไอดี LINE *</label><input id="line-id" name="line_id" class="form-control" required></div>
+<div><label class="field-label">อาชีพ</label><input id="occupation" name="occupation" class="form-control"></div>
 </div>
 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div><label class="field-label" for="age">อายุ</label><input id="age" name="age" class="form-control" type="number" min="0" max="120" inputmode="numeric"></div>
-<div><label class="field-label" for="refund-bank">ธนาคารที่ใช้รับเงินคืน</label><input id="refund-bank" name="refund_bank" class="form-control" type="text"></div>
+<div><label class="field-label">อายุ</label><input id="age" name="age" class="form-control" type="number"></div>
+<div><label class="field-label">ธนาคารที่ใช้รับเงินคืน</label><input id="refund-bank" name="refund_bank" class="form-control"></div>
 </div>
 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div><label class="field-label" for="account-name">ชื่อบัญชี</label><input id="account-name" name="account_name" class="form-control" type="text"></div>
-<div><label class="field-label" for="account-number">หมายเลขบัญชี</label><input id="account-number" name="account_number" class="form-control" type="text" inputmode="numeric"></div>
+<div><label class="field-label">ชื่อบัญชี</label><input id="account-name" name="account_name" class="form-control"></div>
+<div><label class="field-label">หมายเลขบัญชี</label><input id="account-number" name="account_number" class="form-control"></div>
 </div>
-<div class="mt-4"><label class="field-label" for="current-address">ที่อยู่สำหรับติดต่อกลับ *</label><textarea id="current-address" name="current_address" class="form-control" autocomplete="street-address"></textarea></div>
-</div>
-</section>
+<div class="mt-4"><label class="field-label">ที่อยู่สำหรับติดต่อกลับ *</label><textarea id="current-address" name="current_address" class="form-control" required></textarea></div>
+</div></section>
 
-<section class="section-block">
-<div class="section-heading"><span class="section-number">2</span><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">รายละเอียดเรื่องร้องทุกข์</h2></div>
-<div class="section-content">
+<section class="section-block"><div class="section-heading"><span class="section-number">2</span><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">รายละเอียดเรื่องร้องทุกข์</h2></div><div class="section-content">
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div><label class="field-label" for="complaint-subject">หัวข้อเรื่องร้องทุกข์ *</label><input id="complaint-subject" name="complaint_subject" class="form-control" type="text" required></div>
-<div><label class="field-label" for="total-damage">มูลค่าความเสียหายทั้งหมด</label><input id="total-damage" name="total_damage" class="form-control" type="number" min="0" step="0.01" inputmode="decimal"></div>
+<div><label class="field-label">หัวข้อเรื่องร้องทุกข์ *</label><input id="complaint-subject" name="complaint_subject" class="form-control" required></div>
+<div><label class="field-label">มูลค่าความเสียหายทั้งหมด</label><input id="total-damage" name="total_damage" class="form-control" type="number"></div>
 </div>
-<div class="mt-4"><label class="field-label" for="complaint-details">รายละเอียดเรื่องร้องทุกข์ *</label><textarea id="complaint-details" name="complaint_details" class="form-control" required></textarea></div>
-</div>
-</section>
+<div class="mt-4"><label class="field-label">รายละเอียดเรื่องร้องทุกข์ *</label><textarea id="complaint-details" name="complaint_details" class="form-control" required></textarea></div>
+</div></section>
 
-<section class="section-block">
-<div class="section-heading"><span class="section-number">3</span><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">ยืนยันข้อมูล</h2></div>
-<div class="section-content">
-<div class="flex items-start gap-3">
-<input id="confirmed" name="confirmed" class="checkbox-control" type="checkbox" required>
-<label class="cursor-pointer leading-relaxed font-medium" for="confirmed" style="color:#273d52;font-size:16px">ข้าพเจ้าขอรับรองว่าข้อมูลที่แจ้งเป็นความจริง *</label>
-</div>
-<p class="mb-0 mt-3 pl-8 leading-relaxed" style="color:#5f7180;font-size:14px">ข้อมูลของท่านจะถูกใช้เพื่อการตรวจสอบและดำเนินการตามเรื่องร้องทุกข์อย่างเหมาะสมเท่านั้น</p>
-</div>
-</section>
+<section class="section-block"><div class="section-heading"><span class="section-number">3</span><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">ยืนยันข้อมูล</h2></div><div class="section-content">
+<div class="flex items-start gap-3"><input id="confirmed" class="checkbox-control" type="checkbox" required><label for="confirmed" style="color:#273d52;font-size:16px">ข้าพเจ้าขอรับรองว่าข้อมูลที่แจ้งเป็นความจริง *</label></div>
+<p class="mb-0 mt-3 leading-relaxed" style="color:#5f7180;font-size:14px">ข้อมูลของท่านจะถูกใช้เพื่อการตรวจสอบและดำเนินการตามเรื่องร้องทุกข์อย่างเหมาะสมเท่านั้น</p>
+</div></section>
 
-<div id="form-error" class="error-message" role="alert" aria-live="assertive"></div>
+<div id="form-error" class="error-message" role="alert"></div>
 <div class="mt-5 flex flex-col gap-3">
-<button id="submit-button" class="submit-button w-full border-0 px-5 text-white" type="submit" style="background:#155e9b;color:#fff"><span id="submit-button-text">✈ ส่งเรื่องร้องทุกข์</span></button>
+<button id="submit-button" class="submit-button w-full px-5" type="submit"><span id="submit-button-text">✈ ส่งเรื่องร้องทุกข์</span></button>
 <button id="reset-button" class="reset-button w-full px-5" type="button">ล้างแบบฟอร์ม</button>
 </div>
-<div id="success-message" class="status-card items-start gap-3" role="status" aria-live="polite">
-<i data-lucide="circle-check-big" style="width:24px;height:24px;flex:0 0 auto" aria-hidden="true"></i>
-<div>
-<h3 class="m-0 font-bold" style="color:#145c37;font-size:17px">ส่งเรื่องร้องทุกข์เรียบร้อยแล้ว</h3>
-<p class="mb-0 mt-1 leading-relaxed" style="color:#256a46;font-size:15px">ขอบคุณสำหรับข้อมูลของท่าน เจ้าหน้าที่จะตรวจสอบและดำเนินการตามขั้นตอนต่อไป</p>
-</div>
-</div>
+<div id="success-message" class="status-card items-start gap-3"><i data-lucide="circle-check-big" style="width:24px;height:24px"></i><div><h3 class="m-0 font-bold">ส่งเรื่องร้องทุกข์เรียบร้อยแล้ว</h3><p class="mb-0 mt-1">ขอบคุณสำหรับข้อมูลของท่าน เจ้าหน้าที่จะตรวจสอบและดำเนินการตามขั้นตอนต่อไป</p></div></div>
 </form>
 
 <footer class="mt-6 border-t border-slate-200 pt-5">
-<div class="flex items-end justify-between gap-3">
-<div>
-<h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">สถิติการดำเนินงาน</h2>
-<p class="mb-0 mt-1" style="color:#6b7e8c;font-size:14px">ข้อมูลจากระบบรับเรื่องจริง</p>
-</div>
-<i data-lucide="bar-chart-3" style="width:25px;height:25px;color:#155e9b" aria-hidden="true"></i>
-</div>
+<div class="flex items-end justify-between gap-3"><div><h2 class="m-0 font-bold" style="color:#0b2d50;font-size:24px">สถิติการดำเนินงาน</h2><p class="mb-0 mt-1" style="color:#6b7e8c;font-size:14px">ข้อมูลจากระบบรับเรื่องจริง</p></div><i data-lucide="bar-chart-3" style="width:25px;height:25px;color:#155e9b"></i></div>
 <div class="mt-3 grid grid-cols-3 gap-2">
-<div class="stat-card" style="background:#f4f8fb"><span style="color:#40596d;font-size:13px">เรื่องทั้งหมด</span><span id="stat-total-number" class="stat-number" data-stat-key="total">0</span></div>
-<div class="stat-card" style="background:#f4f8fb"><span style="color:#40596d;font-size:13px">อยู่ระหว่างดำเนินการ</span><span id="stat-progress-number" class="stat-number" data-stat-key="in_progress">0</span></div>
-<div class="stat-card" style="background:#f1f9f4"><span style="color:#2f6750;font-size:13px">ดำเนินการแล้ว</span><span id="stat-complete-number" class="stat-number" data-stat-key="completed">0</span></div>
-</div>
-</footer>
-</article>
-</main>
+<div class="stat-card"><span>เรื่องทั้งหมด</span><span id="stat-total-number" class="stat-number">0</span></div>
+<div class="stat-card"><span>อยู่ระหว่างดำเนินการ</span><span id="stat-progress-number" class="stat-number">0</span></div>
+<div class="stat-card"><span>ดำเนินการแล้ว</span><span id="stat-complete-number" class="stat-number">0</span></div>
+</div></footer>
+</article></main>
 
 <script>
-const WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbyZ70NDwcR4lzmiNnjDJR3xwNNimdbvWeKCw0Ri7lngOKqlcyi8T0kRGw11j6-XKi3f4w/exec";
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbyZ70NDwcR4lzmiNnjDJR3xwNNimdbvWeKCw0Ri7lngOKqlcyi8T0kRGw11j6-XKi3f4w/exec";
+const form=document.getElementById("complaint-form"),submitButton=document.getElementById("submit-button"),submitText=document.getElementById("submit-button-text"),errorBox=document.getElementById("form-error"),success=document.getElementById("success-message");
 
-const form = document.getElementById("complaint-form");
-const submitButton = document.getElementById("submit-button");
-const submitButtonText = document.getElementById("submit-button-text");
-const resetButton = document.getElementById("reset-button");
-const errorBox = document.getElementById("form-error");
-const successMessage = document.getElementById("success-message");
-
-function showError(message){errorBox.textContent=message;errorBox.classList.add("is-visible");successMessage.classList.remove("is-visible")}
+function showError(m){errorBox.textContent=m;errorBox.classList.add("is-visible");success.classList.remove("is-visible")}
 function clearError(){errorBox.textContent="";errorBox.classList.remove("is-visible")}
-function validateForm(){
-  const requiredFields=form.querySelectorAll("[required]");
-  let firstInvalid=null;
-  requiredFields.forEach(field=>{
-    const invalid=field.type==="checkbox"?!field.checked:!String(field.value||"").trim();
-    field.setAttribute("aria-invalid",String(invalid));
-    if(invalid&&!firstInvalid)firstInvalid=field;
-  });
-  if(firstInvalid){showError("กรุณากรอกข้อมูลที่มีเครื่องหมาย * ให้ครบถ้วน");firstInvalid.focus();return false}
-  clearError();return true;
-}
-function getFormData(){
- return {
-  full_name:document.getElementById("full-name").value.trim(),
-  phone:document.getElementById("phone").value.trim(),
-  line_id:document.getElementById("line-id").value.trim(),
-  occupation:document.getElementById("occupation").value.trim(),
-  age:document.getElementById("age").value.trim(),
-  refund_bank:document.getElementById("refund-bank").value.trim(),
-  account_name:document.getElementById("account-name").value.trim(),
-  account_number:document.getElementById("account-number").value.trim(),
-  current_address:document.getElementById("current-address").value.trim(),
-  complaint_subject:document.getElementById("complaint-subject").value.trim(),
-  total_damage:document.getElementById("total-damage").value.trim(),
-  complaint_details:document.getElementById("complaint-details").value.trim(),
-  confirmed:document.getElementById("confirmed").checked?"ใช่":"ไม่ใช่"
- };
-}
-function sendToGoogleSheet(data){
- return new Promise(resolve=>{
-  let iframe=document.getElementById("google-sheet-submit-frame");
-  if(!iframe){
-   iframe=document.createElement("iframe");
-   iframe.id="google-sheet-submit-frame";iframe.name="google-sheet-submit-frame";
-   iframe.style.display="none";document.body.appendChild(iframe);
-  }
-  const postForm=document.createElement("form");
-  postForm.method="POST";postForm.action=WEB_APP_URL;postForm.target="google-sheet-submit-frame";postForm.style.display="none";
-  Object.entries(data).forEach(([key,value])=>{
-   const input=document.createElement("input");input.type="hidden";input.name=key;input.value=value==null?"":String(value);postForm.appendChild(input);
-  });
-  document.body.appendChild(postForm);
-  try{postForm.submit()}catch(error){console.error(error)}
-  setTimeout(()=>{postForm.remove();resolve(true)},1400);
- });
-}
-form.addEventListener("submit",async event=>{
- event.preventDefault();clearError();
- if(!validateForm())return;
- submitButton.disabled=true;submitButtonText.textContent="กำลังส่งข้อมูล...";
- try{
-  await sendToGoogleSheet(getFormData());
-  form.reset();
-  form.querySelectorAll('[aria-invalid="true"]').forEach(field=>field.setAttribute("aria-invalid","false"));
-  successMessage.classList.add("is-visible");
-  successMessage.scrollIntoView({behavior:"smooth",block:"nearest"});
-  setTimeout(loadStatistics,1800);
- }catch(error){
-  console.error(error);showError("ไม่สามารถส่งเรื่องร้องทุกข์ได้ กรุณาลองใหม่อีกครั้ง");
- }finally{
-  submitButton.disabled=false;submitButtonText.textContent="✈ ส่งเรื่องร้องทุกข์";
- }
-});
-resetButton.addEventListener("click",()=>{
- form.reset();clearError();successMessage.classList.remove("is-visible");
- form.querySelectorAll('[aria-invalid="true"]').forEach(field=>field.setAttribute("aria-invalid","false"));
- document.getElementById("full-name").focus();
-});
-form.querySelectorAll("input, textarea, select").forEach(field=>{
- field.addEventListener("input",()=>{
-  if(field.getAttribute("aria-invalid")==="true")field.setAttribute("aria-invalid","false");
-  if(errorBox.classList.contains("is-visible"))clearError();
- });
- field.addEventListener("change",()=>{
-  if(field.getAttribute("aria-invalid")==="true")field.setAttribute("aria-invalid","false");
- });
-});
-function formatStatistic(value){return Number(value||0).toLocaleString("en-US")}
-function animateStatistic(element,nextValue){
- const startValue=Number(element.dataset.currentValue||0),endValue=Number(nextValue||0);
- if(startValue===endValue){element.textContent=formatStatistic(endValue);element.dataset.currentValue=String(endValue);return}
- const startTime=performance.now(),duration=650;
- function frame(now){
-  const progress=Math.min((now-startTime)/duration,1),eased=1-Math.pow(1-progress,3);
-  const currentValue=Math.round(startValue+(endValue-startValue)*eased);
-  element.textContent=formatStatistic(currentValue);element.dataset.currentValue=String(currentValue);
-  if(progress<1)requestAnimationFrame(frame);
- }
- requestAnimationFrame(frame);
-}
-function updateStatistics(statistics){
- document.querySelectorAll("[data-stat-key]").forEach(element=>{
-  animateStatistic(element,statistics[element.dataset.statKey]);
- });
-}
-function loadStatistics(){
- return new Promise(resolve=>{
-  const callbackName="complaintStatistics_"+Date.now();
-  const script=document.createElement("script");let finished=false;
-  function finish(data){
-   if(finished)return;finished=true;
-   try{delete window[callbackName]}catch(_){window[callbackName]=undefined}
-   script.remove();
-   if(data)updateStatistics({total:Number(data.total||0),in_progress:Number(data.in_progress||0),completed:Number(data.completed||0)});
-   resolve(data);
-  }
-  window[callbackName]=data=>finish(data);
-  script.src=WEB_APP_URL+"?callback="+encodeURIComponent(callbackName)+"&t="+Date.now();
-  script.onerror=()=>finish(null);
-  document.body.appendChild(script);
-  setTimeout(()=>finish(null),8000);
- });
-}
-function initializeWebsite(){
- if(window.lucide&&typeof lucide.createIcons==="function")lucide.createIcons();
- loadStatistics();
-}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initializeWebsite);
-else initializeWebsite();
+function validate(){let first=null;form.querySelectorAll("[required]").forEach(f=>{let bad=f.type==="checkbox"?!f.checked:!String(f.value||"").trim();f.setAttribute("aria-invalid",bad);if(bad&&!first)first=f});if(first){showError("กรุณากรอกข้อมูลที่มีเครื่องหมาย * ให้ครบถ้วน");first.focus();return false}clearError();return true}
+function data(){return{full_name:document.getElementById("full-name").value.trim(),phone:document.getElementById("phone").value.trim(),line_id:document.getElementById("line-id").value.trim(),occupation:document.getElementById("occupation").value.trim(),age:document.getElementById("age").value.trim(),refund_bank:document.getElementById("refund-bank").value.trim(),account_name:document.getElementById("account-name").value.trim(),account_number:document.getElementById("account-number").value.trim(),current_address:document.getElementById("current-address").value.trim(),complaint_subject:document.getElementById("complaint-subject").value.trim(),total_damage:document.getElementById("total-damage").value.trim(),complaint_details:document.getElementById("complaint-details").value.trim(),confirmed:document.getElementById("confirmed").checked?"ใช่":"ไม่ใช่"}}
+function send(d){return new Promise(resolve=>{let f=document.createElement("iframe");f.name="sheet-frame";f.style.display="none";document.body.appendChild(f);let p=document.createElement("form");p.method="POST";p.action=WEB_APP_URL;p.target="sheet-frame";p.style.display="none";Object.entries(d).forEach(([k,v])=>{let i=document.createElement("input");i.type="hidden";i.name=k;i.value=v;p.appendChild(i)});document.body.appendChild(p);try{p.submit()}catch(e){console.error(e)}setTimeout(()=>{p.remove();f.remove();resolve()},1400)})}
+form.addEventListener("submit",async e=>{e.preventDefault();if(!validate())return;submitButton.disabled=true;submitText.textContent="กำลังส่งข้อมูล...";try{await send(data());form.reset();form.querySelectorAll("[aria-invalid]").forEach(x=>x.setAttribute("aria-invalid","false"));success.classList.add("is-visible");success.scrollIntoView({behavior:"smooth",block:"nearest"})}catch(e){showError("ไม่สามารถส่งเรื่องร้องทุกข์ได้ กรุณาลองใหม่อีกครั้ง")}finally{submitButton.disabled=false;submitText.textContent="✈ ส่งเรื่องร้องทุกข์"}});
+document.getElementById("reset-button").addEventListener("click",()=>{form.reset();clearError();success.classList.remove("is-visible")});
+if(window.lucide)lucide.createIcons();
 </script>
 </body>
 </html>'''
 
 path = Path("/mnt/data/index.html")
 path.write_text(html, encoding="utf-8")
-
-print("สร้างไฟล์ index.html เรียบร้อยแล้ว")
+print(f"สร้างไฟล์ index.html เรียบร้อยแล้ว")
 print(f"ขนาดไฟล์: {path.stat().st_size:,} bytes")
-print(f"ตำแหน่งไฟล์: {path}")
+print(f"ตำแหน่ง: {path}")
